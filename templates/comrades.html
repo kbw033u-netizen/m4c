@@ -33,32 +33,44 @@
     <main class="page-main page-width section-pad">
       <section class="page-hero">
         <p class="eyebrow">Comrades</p>
-        <h1>The grassroots engine of <em>M4C</em></h1>
-        <p>Comrades are the movement’s local organizers, community champions, youth leaders and peace ambassadors. This dedicated page highlights the ward, sub-county and community structure that keeps M4C rooted where citizens live and work.</p>
+        <h1>Campus voices for <em>peace and change</em></h1>
+        <p>The Comrades Section is M4C’s dedicated structure for students and young people in institutions of higher learning.</p>
       </section>
 
       <section class="structure-section">
-        <div class="card-grid">
-          {% for group in groups %}
-            <article class="info-card">
-              <span class="chip accent">{{ group.title }}</span>
-              <h3>{{ group.title }}</h3>
-              <p>{{ group.description }}</p>
-            </article>
-          {% endfor %}
+        <div class="section-heading section-heading-left">
+          <p class="eyebrow">Campus Leadership</p>
+          <h2>Campus Leadership Structure</h2>
         </div>
+        <ol class="role-list campus-role-list">
+          {% for role in campus_roles %}
+            <li><span>{{ forloop.counter }}</span>{{ role }}</li>
+          {% endfor %}
+        </ol>
       </section>
 
       <section class="structure-section">
-        <div class="section-heading">
-          <p class="eyebrow">Ward structure</p>
-          <h2>Community leadership across every county</h2>
+        <div class="section-heading section-heading-left">
+          <p class="eyebrow">Campus Directory</p>
+          <h2>Campus Directory</h2>
         </div>
-        <div class="county-list">
-          {% for county in counties %}
-            <div class="county-pill">{{ county }}</div>
-          {% endfor %}
+        <div class="directory-empty-state">
+          <p>Verified campus names, contacts, and appointed comrades will appear here once the directory is provided.</p>
         </div>
+      </section>
+
+      <section class="structure-section comrades-focus-grid">
+        <article class="info-card"><p class="eyebrow">Campus Activities</p><h3>Campus Activities</h3><p>Forums, peacebuilding activities, student engagement, and campus events will be listed here.</p></article>
+        <article class="info-card"><p class="eyebrow">Academic &amp; Policy Engagement</p><h3>Academic &amp; Policy Engagement</h3><p>Policy discussions, research engagement, civic learning, and campus-led dialogue.</p></article>
+        <article class="info-card"><p class="eyebrow">Welfare &amp; Inclusion</p><h3>Welfare &amp; Inclusion</h3><p>Inclusive participation and support for students across backgrounds and abilities.</p></article>
+        <article class="info-card"><p class="eyebrow">Mobilization</p><h3>Mobilization</h3><p>Campus teams and class or department ambassadors connect students to local action.</p></article>
+        <article class="info-card"><p class="eyebrow">Class / Department Ambassadors</p><h3>Class / Department Ambassadors</h3><p>Ambassador assignments will be published after institutions and representatives are confirmed.</p></article>
+        <article class="info-card"><p class="eyebrow">Campus Events</p><h3>Campus Events</h3><p>Upcoming dates and locations will be added once confirmed by the Comrades leadership.</p></article>
+      </section>
+
+      <section class="comrades-join">
+        <div><p class="eyebrow">Join Comrades</p><h2>Bring M4C to your campus</h2></div>
+        <a class="button button-blue" href="{% url 'home' %}#involve">Join Comrades <span aria-hidden="true">→</span></a>
       </section>
     </main>
   </body>

@@ -40,70 +40,48 @@
       <section class="structure-section">
         <div class="section-heading">
           <p class="eyebrow">National Senior Patrons</p>
-          <h2>National Senior Patrons</h2>
+          <h2>25 National Senior Patrons</h2>
         </div>
-        <div class="card-grid">
-          {% for patron in senior_patrons %}
-            <article class="info-card">
-              <span class="chip">{{ patron.title }}</span>
-              <h3>{{ patron.name }}</h3>
-              <p>{{ patron.focus }}</p>
-            </article>
-          {% endfor %}
+        <div class="senior-patron-roster">
+          <strong>{{ senior_patron_count }} members</strong>
+          <p>Names and photographs will be published when the verified M4C roster is provided. Senior Patrons are shown as a distinguished group without individual administrative offices.</p>
         </div>
       </section>
 
       <section class="structure-section">
         <div class="section-heading">
           <p class="eyebrow">National structure</p>
-          <h2>National Leadership</h2>
+          <h2>National Leadership <span>11 members</span></h2>
         </div>
-        <div class="card-grid">
-          {% for leader in national_leadership %}
-            <article class="info-card">
-              <span class="chip accent">{{ leader.title }}</span>
-              <h3>{{ leader.name }}</h3>
-              <p>{{ leader.focus }}</p>
-            </article>
+        <ol class="role-list">
+          {% for role in national_leadership %}
+            <li><span>{{ forloop.counter }}</span>{{ role }}</li>
           {% endfor %}
-        </div>
+        </ol>
       </section>
 
       <section class="structure-section">
         <div class="section-heading">
           <p class="eyebrow">Regional engagement</p>
-          <h2>Regional Leadership</h2>
+          <h2>Regional Leadership <span>11 members per region</span></h2>
         </div>
-        {% for region in regional_leadership %}
-          <div class="region-block">
-            <h3>{{ region.region }}</h3>
-            <div class="card-grid compact-grid">
-              {% for county, name, title in region.leaders %}
-                <article class="info-card slim-card">
-                  <span class="chip">{{ county }}</span>
-                  <h4>{{ name }}</h4>
-                  <p>{{ title }}</p>
-                </article>
-              {% endfor %}
-            </div>
-          </div>
-        {% endfor %}
+        <ol class="role-list">
+          {% for role in regional_leadership %}
+            <li><span>{{ forloop.counter }}</span>{{ role }}</li>
+          {% endfor %}
+        </ol>
       </section>
 
       <section class="structure-section">
         <div class="section-heading">
           <p class="eyebrow">County structure</p>
-          <h2>County Leadership</h2>
+          <h2>County Leadership <span>11 members per county</span></h2>
         </div>
-        <div class="card-grid">
-          {% for county in county_leadership %}
-            <article class="info-card">
-              <span class="chip">{{ county.county }}</span>
-              <h3>{{ county.leader }}</h3>
-              <p>{{ county.title }}</p>
-            </article>
+        <ol class="role-list">
+          {% for role in county_leadership %}
+            <li><span>{{ forloop.counter }}</span>{{ role }}</li>
           {% endfor %}
-        </div>
+        </ol>
       </section>
     </main>
   </body>

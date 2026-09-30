@@ -1,7 +1,10 @@
 import json
 
+from django.conf import settings
 from django.test import Client, SimpleTestCase
 from django.urls import reverse
+
+from website.views import COUNTY_PROFILES
 
 
 class HomePageTests(SimpleTestCase):
@@ -24,6 +27,10 @@ class OrganizationPagesTests(SimpleTestCase):
         self.assertContains(response, "National Senior Patrons")
         self.assertContains(response, "National Leadership")
         self.assertContains(response, "Regional Leadership")
+        self.assertContains(response, "25 members")
+        self.assertContains(response, "Deputy Patron")
+        self.assertContains(response, "Special Programmes / Stakeholder Relations")
+        self.assertNotContains(response, "Kalonzo Musyoka")
 
     def test_counties_page_lists_kenya_counties(self):
         response = self.client.get(reverse("counties"))
@@ -31,14 +38,45 @@ class OrganizationPagesTests(SimpleTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "M4C Across Kenya")
         self.assertContains(response, "Nairobi")
+        self.assertContains(response, "County map")
+        self.assertContains(response, 'id="countySearchForm"')
+        self.assertContains(response, 'id="countyMap"')
         self.assertContains(response, "Ward leadership")
+        self.assertContains(response, "CC BY 4.0")
+        self.assertContains(response, "CC BY 3.0 IGO")
+        self.assertContains(response, "Public Domain")
+
+    def test_ward_index_covers_all_counties_and_wards(self):
+        self.assertEqual(len(COUNTY_PROFILES), 47)
+        self.assertEqual(sum(county["ward_count"] for county in COUNTY_PROFILES), 1450)
+
+        ward_data = json.loads((settings.BASE_DIR / "static/data/kenya-wards.geojson").read_text(encoding="utf-8"))
+        self.assertEqual(len(ward_data["features"]), 1450)
+        self.assertTrue(all(
+            feature["properties"].get("countyName")
+            and feature["properties"].get("subcountyName")
+            and feature["properties"].get("wardName")
+            for feature in ward_data["features"]
+        ))
+
+    def test_county_profile_lists_real_subcounties_and_wards(self):
+        response = self.client.get(reverse("county-detail", kwargs={"slug": "nairobi"}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Dagoretti")
+        self.assertContains(response, "Mutu-ini Ward")
+        self.assertContains(response, "Ward Patron to be confirmed")
 
     def test_comrades_page_renders(self):
         response = self.client.get(reverse("comrades"))
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Comrades")
-        self.assertContains(response, "Ward structure")
+        self.assertContains(response, "Campus Patron")
+        self.assertContains(response, "Academic &amp; Policy Lead")
+        self.assertContains(response, "Class / Department Ambassadors")
+        self.assertContains(response, "Campus Events")
+        self.assertContains(response, "Join Comrades")
 
 
 class VolunteerApiTests(SimpleTestCase):

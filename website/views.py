@@ -1,9 +1,10 @@
 import json
 import logging
+from pathlib import Path
 
+from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.utils.text import slugify
 from django.views.csrf import csrf_failure as default_csrf_failure
 from django.views.decorators.http import require_POST
 
@@ -34,81 +35,55 @@ STATS = [
     ("500+", "Community Leaders", "🎯"),
 ]
 
-NATIONAL_SENIOR_PATRONS = [
-    {"name": "Rt. Hon. Kalonzo Musyoka", "title": "National Senior Patron", "focus": "National unity and civic dialogue"},
-    {"name": "Prof. Kivutha Kibwana", "title": "National Senior Patron", "focus": "Governance and constitutionalism"},
-    {"name": "Amb. Muthoni W. Gichuru", "title": "National Senior Patron", "focus": "Diplomacy and peacebuilding"},
-    {"name": "Dr. Fredrick Ojiambo", "title": "National Senior Patron", "focus": "Youth inclusion and county engagement"},
-    {"name": "Hon. Esther Passaris", "title": "National Senior Patron", "focus": "Community mobilization and service"},
-]
+SENIOR_PATRONS_COUNT = 25
 
 NATIONAL_LEADERSHIP = [
-    {"name": "Moses K. Mwacharo", "title": "National Chairperson", "focus": "Movement strategy and mobilization"},
-    {"name": "Aisha Njeri", "title": "National Vice Chairperson", "focus": "Women and community leadership"},
-    {"name": "Joseph Ndambuki", "title": "National Secretary General", "focus": "Operations and coordination"},
-    {"name": "Sarah W. Mwangangi", "title": "National Women Leader", "focus": "Women, peace and inclusion"},
-    {"name": "Peter Otieno", "title": "National Youth Leader", "focus": "Youth mobilization and civic education"},
-    {"name": "Njeri Wambui", "title": "National Organising Secretary", "focus": "Grassroots outreach"},
-    {"name": "Daniel Kivuva", "title": "National Communications Director", "focus": "Public engagement and advocacy"},
-    {"name": "Hellen Achieng", "title": "National Finance Secretary", "focus": "Resource mobilization"},
+    "National Patron", "Deputy Patron", "Secretary", "Mobilization / Organizing",
+    "Communications / Digital", "Youth Groups Lead", "Women Groups Lead",
+    "Finance / Resources", "Research / Data", "Discipline / Ethics",
+    "Special Programmes / Stakeholder Relations",
 ]
 
 REGIONAL_LEADERSHIP = [
-    {"region": "Coast", "leaders": [
-        ("Mombasa", "Amina Kilonzo", "Regional Coordinator"),
-        ("Kilifi", "Salim Badi", "Regional Outreach Lead"),
-        ("Kwale", "Hawa Mtai", "Regional Liaison Officer"),
-    ]},
-    {"region": "Western", "leaders": [
-        ("Kakamega", "John M. Mukhwana", "Regional Coordinator"),
-        ("Bungoma", "Faith Wanyonyi", "Regional Outreach Lead"),
-        ("Busia", "Joseph Wafula", "Regional Liaison Officer"),
-    ]},
-    {"region": "Rift Valley", "leaders": [
-        ("Nakuru", "Edwin Kibet", "Regional Coordinator"),
-        ("Kisumu", "Millicent Awuor", "Regional Outreach Lead"),
-        ("Kericho", "Josephat Kiptoo", "Regional Liaison Officer"),
-    ]},
-    {"region": "Central & Nairobi", "leaders": [
-        ("Nairobi", "Wycliffe Mugo", "Regional Coordinator"),
-        ("Kiambu", "Mary Njeri", "Regional Outreach Lead"),
-        ("Nyeri", "Henry Muthoni", "Regional Liaison Officer"),
-    ]},
+    "Regional Patron", "Deputy Patron", "Secretary", "Mobilization / Organizing",
+    "Communications / Digital", "Youth Groups Lead", "Women Groups Lead",
+    "Finance / Resources", "Research / Data", "Discipline / Ethics",
+    "Special Programmes / Stakeholder Relations",
 ]
 
 COUNTY_LEADERSHIP = [
-    {"county": "Nairobi", "leader": "Jane M. Wanjiru", "title": "County Chairperson"},
-    {"county": "Kiambu", "leader": "Peter Kiboro", "title": "County Chairperson"},
-    {"county": "Nakuru", "leader": "Grace Kibet", "title": "County Chairperson"},
-    {"county": "Kisumu", "leader": "Kennedy Ouma", "title": "County Chairperson"},
-    {"county": "Mombasa", "leader": "Mariam Ali", "title": "County Chairperson"},
-    {"county": "Kakamega", "leader": "Beatrice Naliaka", "title": "County Chairperson"},
-    {"county": "Meru", "leader": "Paul M. Kirimi", "title": "County Chairperson"},
-    {"county": "Garissa", "leader": "Abdi Noor", "title": "County Chairperson"},
+    "County Patron", "Deputy Patron", "Secretary", "Mobilization / Organizing",
+    "Communications / Digital", "Youth Groups Lead", "Women Groups Lead",
+    "Finance / Resources", "Research / Data", "Discipline / Ethics",
+    "Special Programmes / Stakeholder Relations",
 ]
 
-COMRADES_GROUPS = [
-    {"title": "Ward structure", "description": "Every ward is organised into a local leadership and outreach structure that keeps the movement close to communities."},
-    {"title": "Sub-county teams", "description": "Sub-county champions coordinate mobilization, dialogue forums, and local volunteer engagement."},
-    {"title": "Youth and women circles", "description": "Dedicated circles connect young people, women leaders, and community advocates to county action plans."},
-    {"title": "Campus and civic clubs", "description": "University, college, and school-based comrades drive civic education and peaceful participation."},
+COMRADES_ROLES = [
+    "Campus Patron", "Campus Chairperson", "Deputy Chairperson", "Secretary",
+    "Organizing Secretary", "Treasurer", "Communications / Digital Lead",
+    "Academic & Policy Lead", "Welfare & Inclusion Lead", "Mobilization Team",
+    "Class / Department Ambassadors",
 ]
+
+COUNTY_DIRECTORY_PATH = Path(settings.BASE_DIR) / "static" / "data" / "kenya-county-directory.json"
+COUNTY_DIRECTORY = json.loads(COUNTY_DIRECTORY_PATH.read_text(encoding="utf-8"))["counties"]
 
 
 def make_county_profiles():
-    base = []
+    profiles = []
     for county in COUNTIES:
-        slug = slugify(county)
-        base.append({
+        directory = COUNTY_DIRECTORY[county]
+        profiles.append({
             "name": county,
-            "slug": slug,
+            "slug": directory["slug"],
             "region": "National county network",
             "county_patron": "County Patron to be confirmed",
-            "sub_county_patron": "Sub-county patron to be confirmed",
             "ward_leadership": "Ward leadership structure under development",
             "focus": "Peacebuilding, outreach and mobilization",
+            "subcounties": directory["subcounties"],
+            "ward_count": sum(len(subcounty["wards"]) for subcounty in directory["subcounties"]),
         })
-    return base
+    return profiles
 
 COUNTY_PROFILES = make_county_profiles()
 
@@ -123,7 +98,7 @@ def home(request):
 
 def leadership(request):
     return render(request, "leadership.html", {
-        "senior_patrons": NATIONAL_SENIOR_PATRONS,
+        "senior_patron_count": SENIOR_PATRONS_COUNT,
         "national_leadership": NATIONAL_LEADERSHIP,
         "regional_leadership": REGIONAL_LEADERSHIP,
         "county_leadership": COUNTY_LEADERSHIP,
@@ -132,8 +107,7 @@ def leadership(request):
 
 def comrades(request):
     return render(request, "comrades.html", {
-        "groups": COMRADES_GROUPS,
-        "counties": COUNTIES,
+        "campus_roles": COMRADES_ROLES,
     })
 
 

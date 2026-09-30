@@ -42,15 +42,38 @@
           <article class="info-card">
             <span class="chip">County patron</span>
             <h3>{{ county.county_patron }}</h3>
+            <p>County patron profile and photograph will be added when verified by M4C.</p>
           </article>
           <article class="info-card">
-            <span class="chip accent">Sub-county patron</span>
-            <h3>{{ county.sub_county_patron }}</h3>
+            <span class="chip accent">Sub-counties</span>
+            <h3>{{ county.subcounties|length }} local areas</h3>
+            <p>Sub-county patron names are pending confirmation.</p>
           </article>
           <article class="info-card">
-            <span class="chip">Ward leadership</span>
-            <h3>{{ county.ward_leadership }}</h3>
+            <span class="chip">Ward coverage</span>
+            <h3>{{ county.ward_count }} mapped wards</h3>
+            <p>Ward patron names are pending confirmation.</p>
           </article>
+        </div>
+      </section>
+
+      <section class="structure-section">
+        <div class="section-heading section-heading-left">
+          <p class="eyebrow">Local hierarchy</p>
+          <h2>Sub-county and ward leadership</h2>
+        </div>
+        <p class="boundary-note">Mapped boundaries are geographic references, not authoritative legal delimitations. Ward data is geoBoundaries KEN ADM3 (CC BY 4.0, 2016); sub-county relationships are derived from KEN ADM2 (CC BY 3.0 IGO, 2020).</p>
+        <div class="subcounty-grid">
+          {% for subcounty in county.subcounties %}
+            <details class="subcounty-item">
+              <summary><strong>{{ subcounty.name }}</strong><span>{{ subcounty.wards|length }} wards</span></summary>
+              <ul class="ward-directory">
+                {% for ward in subcounty.wards %}
+                  <li><span>{{ ward }}</span><small>Ward Patron to be confirmed</small></li>
+                {% endfor %}
+              </ul>
+            </details>
+          {% endfor %}
         </div>
       </section>
     </main>
