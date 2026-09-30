@@ -8,7 +8,8 @@ staticfiles/
 .env.*
 .DS_Store
 *.pem
-.vscode/
+.vscode/*
+!.vscode/mcp.json
 .idea/
 *.swp
 *.swo
