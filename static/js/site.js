@@ -49,7 +49,12 @@ form?.addEventListener('submit', async (event) => {
       },
       body: JSON.stringify(payload),
     });
-    const result = await response.json();
+    const contentType = response.headers.get('content-type') || '';
+    const result = contentType.includes('application/json') ? await response.json() : null;
+    if (!result && response.status === 403) {
+      throw new Error('Your form security token expired. Reload the page and try again.');
+    }
+    if (!result) throw new Error(`Unexpected server response (HTTP ${response.status}). Please try again.`);
     if (!response.ok) throw new Error(result.message || 'Failed to register. Please try again.');
 
     status.classList.add('success');

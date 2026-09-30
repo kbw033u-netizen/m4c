@@ -3,6 +3,7 @@ import logging
 
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.views.csrf import csrf_failure as default_csrf_failure
 from django.views.decorators.http import require_POST
 
 logger = logging.getLogger(__name__)
@@ -39,6 +40,15 @@ def home(request):
         "values": VALUES,
         "stats": STATS,
     })
+
+
+def csrf_failure(request, reason=""):
+    if request.path == "/api/volunteers":
+        return JsonResponse(
+            {"message": "Your form security token expired. Reload the page and try again."},
+            status=403,
+        )
+    return default_csrf_failure(request, reason=reason)
 
 
 @require_POST

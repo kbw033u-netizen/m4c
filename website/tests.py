@@ -1,6 +1,6 @@
 import json
 
-from django.test import SimpleTestCase
+from django.test import Client, SimpleTestCase
 from django.urls import reverse
 
 
@@ -47,3 +47,22 @@ class VolunteerApiTests(SimpleTestCase):
         response = self.client.post(self.url, "{", content_type="application/json")
 
         self.assertEqual(response.status_code, 400)
+
+    def test_csrf_failure_returns_actionable_json(self):
+        client = Client(enforce_csrf_checks=True)
+        client.get(reverse("home"))
+
+        response = client.post(
+            self.url,
+            json.dumps({
+                "fullName": "Amina Otieno",
+                "phoneNumber": "+254700000000",
+                "county": "Nairobi",
+                "interest": "Youth Leader",
+            }),
+            content_type="application/json",
+            HTTP_X_CSRFTOKEN="stale-token",
+        )
+
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.json()["message"], "Your form security token expired. Reload the page and try again.")

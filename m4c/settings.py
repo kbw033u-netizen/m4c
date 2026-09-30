@@ -28,6 +28,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "m4c.urls"
+CSRF_FAILURE_VIEW = "website.views.csrf_failure"
 
 TEMPLATES = [
     {
