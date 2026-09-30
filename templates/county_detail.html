@@ -1,0 +1,58 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ county.name }} | Movement for Change</title>
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <script src="{% static 'js/site.js' %}" defer></script>
+  </head>
+  <body class="page-shell">
+    <header class="site-header" id="siteHeader">
+      <div class="header-inner page-width">
+        <a class="brand" href="{% url 'home' %}">
+          <img src="{% static 'images/m4c-logo.jpeg' %}" alt="Movement for Change logo" width="48" height="48">
+          <span class="brand-copy"><strong>M4C</strong><small>Peace Movement</small></span>
+        </a>
+        <nav class="primary-nav" id="primaryNav" aria-label="Main navigation">
+          <a href="{% url 'home' %}">Home</a>
+          <a href="{% url 'leadership' %}">Leadership</a>
+          <a href="{% url 'counties' %}">Counties</a>
+          <a href="{% url 'comrades' %}">Comrades</a>
+        </nav>
+        <div class="header-actions">
+          <a class="button button-small button-blue" href="{% url 'home' %}#involve">Join Now</a>
+          <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="primaryNav" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main page-width section-pad">
+      <section class="page-hero narrow-hero">
+        <p class="eyebrow">County profile</p>
+        <h1>{{ county.name }}</h1>
+        <p>{{ county.focus }}</p>
+      </section>
+
+      <section class="structure-section">
+        <div class="card-grid">
+          <article class="info-card">
+            <span class="chip">County patron</span>
+            <h3>{{ county.county_patron }}</h3>
+          </article>
+          <article class="info-card">
+            <span class="chip accent">Sub-county patron</span>
+            <h3>{{ county.sub_county_patron }}</h3>
+          </article>
+          <article class="info-card">
+            <span class="chip">Ward leadership</span>
+            <h3>{{ county.ward_leadership }}</h3>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
