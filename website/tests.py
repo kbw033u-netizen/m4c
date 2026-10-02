@@ -8,23 +8,17 @@ from website.views import COUNTY_PROFILES
 
 
 class HomePageTests(SimpleTestCase):
-    def test_home_page_renders_the_animated_brand_logo(self):
+    def test_home_page_uses_the_animated_full_bleed_brand_logo(self):
         response = self.client.get(reverse("home"))
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Movement for Change")
         self.assertContains(response, "m4c-logo.jpeg")
+        self.assertContains(response, "hero-background-logo")
         self.assertNotContains(response, "politician-1.jpeg")
         self.assertNotContains(response, "politician-2.jpeg")
         self.assertNotContains(response, "politician-3.jpeg")
         self.assertContains(response, "csrfmiddlewaretoken")
-
-    def test_home_page_mentions_odm_kenya(self):
-        response = self.client.get(reverse("home"))
-
-        self.assertContains(response, "ODM Kenya")
-        self.assertContains(response, "Orange Democratic Movement")
-
 
 class OrganizationPagesTests(SimpleTestCase):
     def test_leadership_page_has_required_sections(self):
