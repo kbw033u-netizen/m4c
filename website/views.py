@@ -65,6 +65,24 @@ COMRADES_ROLES = [
     "Class / Department Ambassadors",
 ]
 
+LEADERSHIP_PROFILES = [
+    {
+        "image": "images/kimani-w-brian-national-secretary.jpeg",
+        "name": "Kimani W. Brian",
+        "role": "National Secretary",
+    },
+    {
+        "image": "images/brian-gitonga-embu-county-patron.jpeg",
+        "name": "Brian Gitonga",
+        "role": "Embu County Patron",
+    },
+    {
+        "image": "images/martin-kor-deputy-county-patron-samburu-county.jpeg",
+        "name": "Martin Kor",
+        "role": "Deputy County Patron, Samburu County",
+    },
+]
+
 COUNTY_DIRECTORY_PATH = Path(settings.BASE_DIR) / "static" / "data" / "kenya-county-directory.json"
 COUNTY_DIRECTORY = json.loads(COUNTY_DIRECTORY_PATH.read_text(encoding="utf-8"))["counties"]
 
@@ -99,6 +117,7 @@ def home(request):
 def leadership(request):
     return render(request, "leadership.html", {
         "senior_patron_count": SENIOR_PATRONS_COUNT,
+        "leadership_profiles": LEADERSHIP_PROFILES,
         "national_leadership": NATIONAL_LEADERSHIP,
         "regional_leadership": REGIONAL_LEADERSHIP,
         "county_leadership": COUNTY_LEADERSHIP,

@@ -49,6 +49,24 @@
       </section>
 
       <section class="structure-section">
+        <div class="section-heading section-heading-left">
+          <p class="eyebrow">Leadership profiles</p>
+          <h2>Meet the M4C leaders</h2>
+        </div>
+        <div class="leader-profile-grid">
+          {% for profile in leadership_profiles %}
+            <article class="leader-profile">
+              <img class="leader-profile-photo" src="{% static profile.image %}" alt="{{ profile.name }}" loading="lazy">
+              <div class="leader-profile-copy">
+                <h3>{{ profile.name }}</h3>
+                <p>{{ profile.role }}</p>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="structure-section">
         <div class="section-heading">
           <p class="eyebrow">National structure</p>
           <h2>National Leadership <span>11 members</span></h2>

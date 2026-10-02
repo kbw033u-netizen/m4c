@@ -60,19 +60,12 @@ h1 em, .section-heading em { color: var(--blue); font-style: normal; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .hero-notes { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 28px; color: #4e6268; font-size: 12px; font-weight: 700; }
 .hero-notes span::before { content: "✓"; margin-right: 7px; color: var(--green); font-weight: 900; }
-.portrait-collage { position: relative; display: grid; height: 520px; margin: 0; grid-template: 1fr 1fr / 1.05fr .95fr; gap: 11px; animation: enter-up 650ms 80ms ease both; }
-.portrait-main, .portrait-side { position: relative; min-width: 0; overflow: hidden; background: #dbe3e2; }
-.portrait-main { grid-row: 1 / 3; border-radius: 48% 48% 5px 5px; }
-.portrait-side-one { border-radius: 5px 30px 5px 30px; }
-.portrait-side-two { border-radius: 30px 5px 30px 5px; }
-.portrait-collage img { width: 100%; height: 100%; object-fit: cover; }
-.portrait-main img { object-position: center 18%; }
-.portrait-side img { object-position: center 22%; }
-.portrait-caption { position: absolute; right: -12px; bottom: 18px; display: flex; align-items: center; gap: 11px; max-width: 240px; padding: 12px 16px; border-left: 3px solid var(--gold); background: var(--white); box-shadow: 0 10px 30px rgb(18 45 58 / 15%); }
-.caption-mark { color: var(--blue); font-size: 18px; font-weight: 900; }
-.portrait-caption strong, .portrait-caption small { display: block; }
-.portrait-caption strong { font-size: 12px; }
-.portrait-caption small { color: var(--muted); font-size: 10px; }
+.hero-emblem { position: relative; width: min(100%, 500px); aspect-ratio: 1; margin: 0 auto; display: grid; place-items: center; animation: enter-up 650ms 80ms ease both; }
+.hero-emblem-ring { position: absolute; inset: 5%; border: 1px solid rgb(23 98 142 / 23%); border-radius: 50%; animation: emblem-ring 24s linear infinite; }
+.hero-emblem-ring::before, .hero-emblem-ring::after { content: ""; position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); }
+.hero-emblem-ring::before { top: 12%; left: 16%; }
+.hero-emblem-ring::after { right: 11%; bottom: 19%; width: 8px; height: 8px; background: var(--coral); }
+.hero-emblem img { position: relative; width: 78%; aspect-ratio: 1; object-fit: cover; border-radius: 50%; box-shadow: 0 24px 65px rgb(19 43 53 / 13%); animation: emblem-float 5s ease-in-out infinite; }
 
 .impact-strip { background: #173f53; color: var(--white); }
 .impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
@@ -203,6 +196,12 @@ h1 em, .section-heading em { color: var(--blue); font-style: normal; }
 .senior-patron-roster, .directory-empty-state { padding: 24px; border: 1px solid var(--line); background: var(--white); }
 .senior-patron-roster strong { color: var(--blue); font-size: 24px; }
 .senior-patron-roster p, .directory-empty-state p { max-width: 720px; margin: 8px 0 0; color: var(--muted); line-height: 1.7; }
+.leader-profile-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.leader-profile { min-width: 0; overflow: hidden; border: 1px solid var(--line); background: var(--white); }
+.leader-profile-photo { width: 100%; height: 310px; object-fit: cover; object-position: center 28%; background: #e6ecea; }
+.leader-profile-copy { padding: 16px 18px; border-top: 1px solid var(--line); }
+.leader-profile-copy h3 { margin: 0 0 4px; font-size: 16px; }
+.leader-profile-copy p { margin: 0; color: var(--muted); font-size: 13px; }
 .role-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 18px; margin: 0; padding: 0; list-style: none; counter-reset: none; }
 .role-list li { min-height: 58px; padding: 12px 15px; display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); background: var(--white); font-size: 14px; font-weight: 700; }
 .role-list li > span { width: 28px; height: 28px; flex: 0 0 28px; display: grid; place-items: center; border-radius: 50%; background: #e7f2f5; color: var(--blue); font-size: 12px; }
@@ -217,11 +216,13 @@ h1 em, .section-heading em { color: var(--blue); font-style: normal; }
 .comrades-join h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 28px; }
 
 @keyframes enter-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes emblem-float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-9px) scale(1.015); } }
+@keyframes emblem-ring { to { transform: rotate(360deg); } }
 @media (max-width: 900px) {
   .primary-nav { gap: 14px; font-size: 12px; }
   .hero { min-height: 0; }
   .hero-inner { grid-template-columns: 1fr .8fr; gap: 28px; }
-  .portrait-collage { height: 440px; }
+  .hero-emblem { width: min(100%, 400px); }
   .values-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: repeat(2, 1fr); }
   .map-layout { grid-template-columns: 1fr; }
@@ -243,8 +244,7 @@ h1 em, .section-heading em { color: var(--blue); font-style: normal; }
   .hero-inner { grid-template-columns: 1fr; gap: 38px; }
   h1 { max-width: 580px; font-size: clamp(40px, 11vw, 56px); }
   .hero-summary { font-size: 15px; }
-  .portrait-collage { width: min(100%, 440px); height: 410px; margin-inline: auto; }
-  .portrait-caption { right: 0; }
+  .hero-emblem { width: min(100%, 390px); }
   .impact-grid { grid-template-columns: repeat(2, 1fr); }
   .impact-item { min-height: 104px; padding: 17px 12px; }
   .impact-item:nth-child(odd) { border-left: 1px solid rgb(255 255 255 / 15%); }
@@ -267,6 +267,8 @@ h1 em, .section-heading em { color: var(--blue); font-style: normal; }
   #countyMap { height: 360px; }
   .subcounty-grid { grid-template-columns: 1fr; }
   .role-list { grid-template-columns: 1fr; }
+  .leader-profile-grid { grid-template-columns: 1fr; }
+  .leader-profile-photo { height: min(110vw, 420px); }
   .comrades-focus-grid { grid-template-columns: 1fr; }
   .comrades-join { flex-direction: column; align-items: flex-start; }
 }

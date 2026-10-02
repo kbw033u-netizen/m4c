@@ -8,15 +8,22 @@ from website.views import COUNTY_PROFILES
 
 
 class HomePageTests(SimpleTestCase):
-    def test_home_page_renders_the_brand_and_leader_photos(self):
+    def test_home_page_renders_the_animated_brand_logo(self):
         response = self.client.get(reverse("home"))
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Movement for Change")
-        self.assertContains(response, "politician-1.jpeg")
-        self.assertContains(response, "politician-2.jpeg")
-        self.assertContains(response, "politician-3.jpeg")
+        self.assertContains(response, "m4c-logo.jpeg")
+        self.assertNotContains(response, "politician-1.jpeg")
+        self.assertNotContains(response, "politician-2.jpeg")
+        self.assertNotContains(response, "politician-3.jpeg")
         self.assertContains(response, "csrfmiddlewaretoken")
+
+    def test_home_page_mentions_odm_kenya(self):
+        response = self.client.get(reverse("home"))
+
+        self.assertContains(response, "ODM Kenya")
+        self.assertContains(response, "Orange Democratic Movement")
 
 
 class OrganizationPagesTests(SimpleTestCase):
@@ -31,6 +38,12 @@ class OrganizationPagesTests(SimpleTestCase):
         self.assertContains(response, "Deputy Patron")
         self.assertContains(response, "Special Programmes / Stakeholder Relations")
         self.assertNotContains(response, "Kalonzo Musyoka")
+        self.assertContains(response, "Brian Gitonga")
+        self.assertContains(response, "Embu County Patron")
+        self.assertContains(response, "Kimani W. Brian")
+        self.assertContains(response, "National Secretary")
+        self.assertContains(response, "Martin Kor")
+        self.assertContains(response, "Deputy County Patron, Samburu County")
 
     def test_counties_page_lists_kenya_counties(self):
         response = self.client.get(reverse("counties"))
