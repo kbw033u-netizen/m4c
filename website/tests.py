@@ -38,6 +38,10 @@ class OrganizationPagesTests(SimpleTestCase):
         self.assertContains(response, "National Secretary")
         self.assertContains(response, "Martin Kor")
         self.assertContains(response, "Deputy County Patron, Samburu County")
+        self.assertContains(response, "John Waithaka")
+        self.assertContains(response, "Wanjeri Esther Stacy")
+        self.assertContains(response, "Esther Muteri")
+        self.assertContains(response, "Moses Mwero")
 
     def test_counties_page_lists_kenya_counties(self):
         response = self.client.get(reverse("counties"))

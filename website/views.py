@@ -81,6 +81,26 @@ LEADERSHIP_PROFILES = [
         "name": "Martin Kor",
         "role": "Deputy County Patron, Samburu County",
     },
+    {
+        "image": "images/john-waithaka-county-patron-nyeri.jpeg",
+        "name": "John Waithaka",
+        "role": "County Patron, Nyeri County",
+    },
+    {
+        "image": "images/wanjeri-esther-stacy-nakuru-county-patron.jpeg",
+        "name": "Wanjeri Esther Stacy",
+        "role": "County Patron, Nakuru County",
+    },
+    {
+        "image": "images/esther-muteri-kajiado-county-patron.jpeg",
+        "name": "Esther Muteri",
+        "role": "County Patron, Kajiado County",
+    },
+    {
+        "image": "images/moses-mwero-county-patron-kwale-county.jpeg",
+        "name": "Moses Mwero",
+        "role": "County Patron, Kwale County",
+    },
 ]
 
 COUNTY_DIRECTORY_PATH = Path(settings.BASE_DIR) / "static" / "data" / "kenya-county-directory.json"
