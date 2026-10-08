@@ -67,39 +67,24 @@ COMRADES_ROLES = [
 
 LEADERSHIP_PROFILES = [
     {
+        "image": "images/national-chair-chief.jpeg",
+        "name": "National Chair",
+        "role": "National Chair",
+    },
+    {
         "image": "images/kimani-w-brian-national-secretary.jpeg",
         "name": "Kimani W. Brian",
-        "role": "National Secretary",
+        "role": "Chief, National Secretary",
     },
     {
-        "image": "images/brian-gitonga-embu-county-patron.jpeg",
-        "name": "Brian Gitonga",
-        "role": "Embu County Patron",
+        "image": "images/joseph-masini-national-coordinator.jpeg",
+        "name": "Joseph Masini",
+        "role": "National Coordinator",
     },
     {
-        "image": "images/martin-kor-deputy-county-patron-samburu-county.jpeg",
-        "name": "Martin Kor",
-        "role": "Deputy County Patron, Samburu County",
-    },
-    {
-        "image": "images/john-waithaka-county-patron-nyeri.jpeg",
-        "name": "John Waithaka",
-        "role": "County Patron, Nyeri County",
-    },
-    {
-        "image": "images/wanjeri-esther-stacy-nakuru-county-patron.jpeg",
-        "name": "Wanjeri Esther Stacy",
-        "role": "County Patron, Nakuru County",
-    },
-    {
-        "image": "images/esther-muteri-kajiado-county-patron.jpeg",
-        "name": "Esther Muteri",
-        "role": "County Patron, Kajiado County",
-    },
-    {
-        "image": "images/moses-mwero-county-patron-kwale-county.jpeg",
-        "name": "Moses Mwero",
-        "role": "County Patron, Kwale County",
+        "image": "images/rob-jilo-national-finance-resource-mobilization.jpeg",
+        "name": "Rob Jilo",
+        "role": "National Finance & Resource Mobilization",
     },
 ]
 
